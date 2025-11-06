@@ -1,0 +1,32 @@
+apiVersion: skaffold/v2alpha3
+kind: config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  # do not push any image that we build to hocker hub - default behaviour
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectTd: ticketing-dev-456204
+  # all the things that are going to be built
+  artifacts:
+    - image: anushkaxag/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      # how to handle files when changed
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: anushkaxag/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      # how to handle files when changed
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .

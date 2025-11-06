@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-mongo
+  template:
+    metadata:
+      labels:
+        app: auth-mongo
+    spec:
+      containers:
+        - name: auth-mongo
+          # In the Docker Hub, there is a mongo image
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-mongo-srv
+spec:
+  # deafault Servie - Cluster IP Service
+  # Selector - telling service which pods it is going to govern access to
+  # Find any pod with an label of auth-mongo
+  selector:
+    app: auth-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      # By defualt, mongodb listens to incoming traffic on port 27017
+      port: 27017
+      targetPort: 27017
