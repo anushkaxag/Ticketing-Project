@@ -12,6 +12,7 @@ const LandingPage = ({ currentUser }) => {
 
 // Because of difference in enviornment, the request gives error when made via server
 LandingPage.getInitialProps = async (context) => {
+    console.log("LANDING PAGE");
     const client = buildClient(context);
     const { data } = await client.get('/api/users/currentuser');
     return data;
