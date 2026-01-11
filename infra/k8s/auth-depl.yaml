@@ -19,6 +19,8 @@ spec:
         - name: auth
           image: anushkaxag/auth
           env:
+            - name: MONGO_URI
+              value: "mongodb://auth-mongo-srv:27017/auth"
             - name: JWT_KEY
               # Value from secret created
               valueFrom:
