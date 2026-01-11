@@ -2,10 +2,9 @@ import express, { Request, Response } from "express";
 // Using Express-validator library for email and password validation
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
+import { validateRequest, BadRequestError } from "@axgtickets/common";
 
-import { validateRequest } from "../middlewares/validate-request";
 import { User } from "../models/user";
-import { BadRequestError } from "../errors/bad-request-error";
 
 const router = express.Router();
 router.post(

@@ -39,8 +39,8 @@ const userSchema = new mongoose.Schema(
   {
     toJSON: {
       // ret - direct changes to that object
-      transform(doc, ret) {
-        ret.id = ret._id;
+      transform(doc, ret: any) {
+        ret.id = ret._id.toString();
         delete ret._id;
         // remove property off the object
         delete ret.password;

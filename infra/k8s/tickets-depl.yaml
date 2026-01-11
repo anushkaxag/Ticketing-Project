@@ -1,0 +1,45 @@
+# Deployment configuration
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-depl
+spec:
+  replicas: 1
+  # How it's going to find the pods it creates
+  selector:
+    matchLabels:
+      app: tickets
+  template:
+    metadata:
+      # Label that is going to be applied to the pod
+      labels:
+        app: tickets
+    spec:
+      containers:
+        - name: tickets
+          image: anushkaxag/tickets
+          env:
+            - name: JWT_KEY
+              # Value from secret created
+              valueFrom:
+                secretKeyRef:
+                  # Name of the secret
+                  name: jwt-secret
+                  # all keys of key-value pair inside secret
+                  key: JWT_KEY
+
+---
+# Service Configuration
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-srv
+spec:
+  # deafault Servie - Cluster IP Service
+  selector:
+    app: tickets
+  ports:
+    - name: tickets
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

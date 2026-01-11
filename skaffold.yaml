@@ -30,3 +30,12 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+    - image: anushkaxag/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      # how to handle files when changed
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
