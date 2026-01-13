@@ -10,7 +10,7 @@ const LandingPage = ({ currentUser }) => {
     // return <h1>Landing Page</h1>;
 };
 
-// Because of difference in enviornment, the request gives error when made via server
+// Because of difference in environment, the request gives error when made via server
 LandingPage.getInitialProps = async (context) => {
     console.log("LANDING PAGE");
     const client = buildClient(context);
