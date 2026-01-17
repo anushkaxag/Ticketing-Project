@@ -36,7 +36,7 @@ router.put(
       title: req.body.title,
       price: req.body.price,
     });
-    // update in MongoDB
+    // persist update in MongoDB
     await ticket.save();
 
     res.send(ticket);
