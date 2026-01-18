@@ -1,4 +1,5 @@
 import mongoose, { mongo } from "mongoose";
+import { Types } from "mongoose";
 
 interface TicketAttrs {
   title: string;
@@ -34,12 +35,12 @@ const ticketSchema = new mongoose.Schema(
   },
   {
     toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id;
+      transform(doc, ret: { _id?: Types.ObjectId; id?: string }) {
+        ret.id = ret._id?.toString();
         delete ret._id;
       },
     },
-  }
+  },
 );
 
 ticketSchema.statics.build = (attrs: TicketAttrs) => {

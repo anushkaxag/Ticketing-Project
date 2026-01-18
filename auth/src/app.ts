@@ -24,7 +24,7 @@ app.use(
     // in test env, jest sets NODE_ENV -> 'test', so secure: False
     // in any other env, secure: True (only HTTPs requests)
     secure: process.env.NODE_ENV != "test",
-  })
+  }),
 );
 
 app.use(currentUserRouter);
