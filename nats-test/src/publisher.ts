@@ -10,4 +10,15 @@ const stan = nats.connect("ticketing", "abc", {
 // Event based approach
 stan.on("connect", () => {
   console.log("Publisher connected to NATS");
+
+  const data = JSON.stringify({
+    id: "123",
+    title: "concert",
+    price: 20,
+  });
+
+  // publish(subject name, data, optional: callback function - invoked when data is published)
+  stan.publish("ticket:created", data, () => {
+    console.log("Event Published");
+  });
 });
