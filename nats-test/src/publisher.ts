@@ -1,5 +1,7 @@
 import nats from "node-nats-streaming";
 
+console.clear();
+
 // stan is an instance of nats or client to connect to nats server
 // connect(clusterId, clientId, options)
 const stan = nats.connect("ticketing", "abc", {
