@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-
 import { app } from "./app";
+import { natsWrapper } from "./nats-wrapper";
 
 // Connecting Node.js to MongoDB instance - which is in a pod
 // We use clustreIP Service to reach a pod
@@ -16,6 +16,7 @@ const start = async () => {
   // Write name of service, than the port, than the db name
   // DataBase, will be created automatically - auth named
   try {
+    await natsWrapper.connect("ticketing", "fdafad", "http://nats-srv:4222");
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDB");
   } catch (err) {
