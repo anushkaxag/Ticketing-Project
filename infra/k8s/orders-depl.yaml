@@ -1,0 +1,55 @@
+# Deployment configuration
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-depl
+spec:
+  replicas: 1
+  # How it's going to find the pods it creates
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      # Label that is going to be applied to the pod
+      labels:
+        app: orders
+    spec:
+      containers:
+        - name: orders
+          image: anushkaxag/orders
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name: MONGO_URI
+              value: "mongodb://orders-mongo-srv:27017/orders"
+            - name: JWT_KEY
+              # Value from secret created
+              valueFrom:
+                secretKeyRef:
+                  # Name of the secret
+                  name: jwt-secret
+                  # all keys of key-value pair inside secret
+                  key: JWT_KEY
+
+---
+# Service Configuration
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-srv
+spec:
+  # deafault Servie - Cluster IP Service
+  selector:
+    app: orders
+  ports:
+    - name: orders
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

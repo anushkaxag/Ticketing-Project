@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-mongo
+  template:
+    metadata:
+      labels:
+        app: orders-mongo
+    spec:
+      containers:
+        - name: orders-mongo
+          # In the Docker Hub, there is a mongo image
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-mongo-srv
+spec:
+  # deafault Servie - Cluster IP Service
+  # Selector - telling service which pods it is going to govern access to
+  # Find any pod with an label of orders-mongo
+  selector:
+    app: orders-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      # By defualt, mongodb listens to incoming traffic on port 27017
+      port: 27017
+      targetPort: 27017
