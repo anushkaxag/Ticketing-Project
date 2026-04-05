@@ -3,10 +3,11 @@ import "express-async-errors";
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import { errorHandler, NotFoundError, currentUser } from "@axgtickets/common";
-import { createTicketRouter } from "./routes/new";
-import { showTicketRouter } from "./routes/show";
-import { indexTicketRouter } from "./routes/index";
-import { updateTicketRouter } from "./routes/update";
+
+import { deleteOrderRouter } from "./routes/delete";
+import { showOrderRouter } from "./routes/show";
+import { indexOrderRouter } from "./routes";
+import { newOrderRouter } from "./routes/new";
 
 const app = express();
 // Since ingress is acting as proxy server to redirect our request
@@ -23,14 +24,14 @@ app.use(
     // in test env, jest sets NODE_ENV -> 'test', so secure: False
     // in any other env, secure: True (only HTTPs requests)
     secure: process.env.NODE_ENV != "test",
-  })
+  }),
 );
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(indexTicketRouter);
-app.use(updateTicketRouter);
+app.use(deleteOrderRouter);
+app.use(showOrderRouter);
+app.use(indexOrderRouter);
+app.use(newOrderRouter);
 
 app.all("*", async () => {
   throw new NotFoundError();
