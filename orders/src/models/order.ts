@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@axgtickets/common";
 import { TicketDoc } from "./ticket";
+export { OrderStatus };
 
 interface OrderAttrs {
   userId: string;
@@ -10,14 +11,14 @@ interface OrderAttrs {
 }
 
 interface OrderDoc extends mongoose.Document {
-  build(attrs: OrderAttrs): OrderDoc;
-}
-
-interface OrderModel extends mongoose.Model<OrderDoc> {
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
+}
+
+interface OrderModel extends mongoose.Model<OrderDoc> {
+  build(attrs: OrderAttrs): OrderDoc;
 }
 
 const orderSchema = new mongoose.Schema(
