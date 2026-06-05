@@ -1,2 +1,5 @@
 ﻿# Ticketing-Project
-This is a full-stack web application which implements the concept of Microservices, where each service is deployed in Docker Container and containers are orchestrated using Kubernetes. These services are independent of each other and communicate asynchronously via an event bus. 
+ 
+This project is built using a **microservices architecture**. I developed the project using the **MERN stack, TypeScript, Next.js, and Redux**, with each service designed to operate independently and communicate through an **event-driven** approach. The application includes features such as authentication, ticket creation and management, and order processing. To improve performance and reduce database load, I integrated **Redis caching**, while **TypeScript** helped maintain code quality and scalability across services.
+
+For deployment and infrastructure, I containerized all services using **Docker** and orchestrated them with **Kubernetes**. I used **Skaffold** to automate the development workflow by rebuilding and updating containers whenever code changes were made, enabling faster iteration and testing. Additionally, I configured **Ingress NGINX** to route external traffic to the appropriate Kubernetes services, ensuring efficient request handling. To maintain reliability and code quality, I implemented comprehensive testing using **Jest**.
